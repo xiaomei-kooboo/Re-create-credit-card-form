@@ -170,7 +170,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .cardapp
-    width 41%
+    width 100%
     margin-top: 30px
     margin 0 auto
     margin-top 30px
@@ -256,12 +256,13 @@ export default {
 .active
       color:#fff
 .sub_form
-    padding-left 70px
+    width 390px
+    margin 20px auto
 .form-outnum p
    font-size 13px   
    margin-top 4px       
 .form-outnum input
-    width 390px
+    width 100%
     height 35px
     border  1px solid #d9d9d9
     color #8e8e96
@@ -269,8 +270,11 @@ export default {
     font-size 16px
     padding-left 10px
     border-radius 5px
+    margin 0 auto
 .form-outnum, .sub_name
     margin-top 15px
+.from_outdate
+    width 402px
 .from_outdate input
     width 174px
     height 35px
@@ -300,6 +304,8 @@ export default {
     margin -7% 0 0 38%
     font-size 16px
     color white 
+    line-height 20px
+    text-align center
 .dis_todo li
     width 300px
     height 20px
@@ -309,13 +315,13 @@ export default {
     list-style none
 .format-prompt
     position absolute
-    top 58%
-    left 20%
+    top 59%
+    left 40%
 .vaild-newsite
-    top 92%
-    left 10%
+    top 90%
+    left 35%
 .cvc-newsite
-    top 92%
+    top 90%
     left 52%
 #triangle  
     width 230px   
