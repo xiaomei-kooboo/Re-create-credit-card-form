@@ -3,8 +3,8 @@
     <div class="cardapp" >          
             <div class="reco_card">
                 <!-- 正面 -->
-            <transition name="showfront">
-                <div class="exhibit-front" v-show="!Thefrontcard">
+            <transition name="showfront" >
+                <div class="exhibit-front" v-show="!Thefrontcard" >
                     <div class="reco_card_img" ></div>    
                     <div class="reco_card_num" 
                          :class="{active: Theoutnum}"
@@ -68,7 +68,7 @@
                                 @focus="Thefrontcard = !Thefrontcard" 
                                 @blur="Thefrontcard = !Thefrontcard">
                     </div>                    
-                </div>
+                </div>                
                 <div class="from_pay">
                     <input type="button"  @click="showhidecontent" >
                     <p>PAY</p>
@@ -83,7 +83,16 @@
                         <li>cvc: {{ todocvc }}</li>
                         <li >issuer:</li>
                     </ul>
-            </div> 
+            </div>                    
+            <div class="format-prompt" v-show="promptmsg">
+                <div id="triangle" class="rectangle">请按照要求填写该字段</div>                 
+            </div>
+            <div class="format-prompt vaild-newsite" v-show="promptmsgvaild">
+                <div id="triangle" class="rectangle">请按照要求填写该字段</div>                 
+            </div>
+            <div class="format-prompt cvc-newsite" v-show="promptmsgcvc">
+                <div id="triangle" class="rectangle">请按照要求填写该字段</div>                 
+            </div>
         </div>
   </div>
 </template>
@@ -101,12 +110,50 @@ export default {
             Theoutnum:false,
             Theoutname:false,
             Theoutvaild:false,
+            promptmsg:false,
+            promptmsgvaild:false,
+            promptmsgcvc:false,
         }
     },
+    // watch:{
+    //     todonum:function(value){
+    //         var addcolor = parseInt(value.substring(0,2))
+    //         this.isTrue = true
+    //         switch (addcolor) {
+    //         case 49:
+    //             this.bgColor = "linear-gradient(25deg, #0f509e, #1399cd)"
+    //         break
+    //         case 51:
+    //             this.bgColor = "linear-gradient(25deg, #f37b26, #fdb731)"
+    //         break
+    //         case 36:
+    //             this.bgColor = "linear-gradient(25deg, #fff, #eee)"
+    //         break
+    //         case 37:
+    //             this.bgColor = "linear-gradient(25deg, #308c67, #a3f2cf)"
+    //         break
+    //         default:
+    //             this.bgColor = "linear-gradient(25deg, #999, #999)"
+    //         }        
+    //     }
+    // },
     methods: {
         showhidecontent() {
-          this.hidecontent = true      
-            },
+            console.log(this.todonum.length)
+            console.log(this.tododate.length)
+            console.log(this.todocvc.length)
+            if(this.todonum.length < 20){
+                this.promptmsg = !this.promptmsg
+            }else if(this.tododate.length < 5) { 
+                this.promptmsgvaild = true
+            } else if(this.todocvc.length < 4) {
+                this.promptmsgcvc = !this.promptmsgcvc
+            } else {
+                this.promptmsgcvc = false
+                this.promptmsgvaild = false
+                this.hidecontent = true
+            }
+        },
         showpoint(e){
                 var addnum = e.target.value.split('')
                 var total = this.todonum.split('')
@@ -117,7 +164,7 @@ export default {
         showname(e){this.todoname = e.target.value;},                      
         showvaild(e){this.tododate = e.target.value;},          
         showcvc(e){this.todocvc = e.target.value;}                         
-     },           
+     },         
 }
 </script>
 
@@ -142,6 +189,20 @@ export default {
 .exhibit-back
     position absolute
     top 0
+
+.showfront-enter-active
+    transition: all .3s .3s
+.showfront-leave-active
+    transition: all .3s 
+.showfront-enter,.showfront-leave-active
+    transform: rotateY(90deg)
+.showback-enter-active
+    transition: all .3s .3s
+.showback-leave-active
+    transition: all .3s 
+.showback-enter,.showback-leave-active
+    transform: rotateY(-90deg)
+
 .revercard
     width 290px
     height 40px
@@ -245,22 +306,50 @@ export default {
     margin 10px auto
     font-family monospace
     font-size 17px
-    list-style:none
-
-.showfront-enter-active
-  transition: all .3s .3s
-.showfront-leave-active
-  transition: all .3s 
-.showfront-enter,
-.showfront-leave-active
-  transform: rotateY(90deg)
-  
-.showback-enter-active
-  transition: all .3s .3s
-.showback-leave-active
-  transition: all .3s 
-.showback-enter,
-.showback-leave-active
-  transform: rotateY(-90deg)
+    list-style none
+.format-prompt
+    position absolute
+    top 58%
+    left 20%
+.vaild-newsite
+    top 92%
+    left 10%
+.cvc-newsite
+    top 92%
+    left 52%
+#triangle  
+    width 230px   
+    height 40px   
+    position relative     
+    border 1px #999999 solid  
+    background-color #fff  
+    border-radius 5px
+    font-size 14px
+    line-height 40px
+    text-align center
+    background-image url(../assets/3259.png)
+    background-repeat no-repeat
+    background-position-x 12px
+    background-position-y 9px
+#triangle:before   
+    content: " "
+    position: absolute
+    top -27% 
+    left 20px  
+    width 0
+    height 0  
+    border-left 10px solid transparent   
+    border-bottom 10px solid #999999  
+    border-right 10px solid transparent  
+.rectangle:after   
+    content: " "  
+    position absolute   
+    top -22%   
+    left 21px   
+    width 0   
+    height 0   
+    border-left 9px solid transparent   
+    border-bottom 9px solid #fff 
+    border-right 9px solid transparent 
 
 </style>
