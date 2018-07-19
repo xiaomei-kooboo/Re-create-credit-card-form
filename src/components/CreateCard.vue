@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import MatchCard from '@/components/MatchCard'
 import topcard from "@/components/TopCard"
 import {repalcepoint} from "../common/common"
 export default {
@@ -85,7 +86,8 @@ export default {
         }
     },
     components : {
-        'top-card' : topcard
+        'top-card' : topcard,
+        'match-card': MatchCard
     },
     methods: {      
         showSyncNum(e){
@@ -93,23 +95,23 @@ export default {
         },
         outSyncName(e){
             this.firstName = e.target.value;
-            },                      
+        },                      
         outSyncVaild(e){
             this.expiryDate = e.target.value;
-            },          
+        },          
         outSyncCvc(e){
             this.digitCvc = e.target.value;
-            },                         
+        },                         
         toggleContent() {
-                if(this.pointNum.length <16){
-                        this.togglePay = false
-                    }else if(this.digitCvc.length < 4) {
-                        this.togglePay = false
-                    } else {
-                        this.togglePay = true                
-                    }      
-                },         
-            }
+            if(this.pointNum.length <16){
+                    this.togglePay = false
+                }else if(this.digitCvc.length < 4) {
+                    this.togglePay = false
+                } else {
+                    this.togglePay = true                
+                }      
+            }   
+        }, 
     }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -221,4 +223,12 @@ export default {
     border-left 9px solid transparent   
     border-bottom 9px solid #fff 
     border-right 9px solid transparent 
+
+.slide-enter-active,
+.slide-leave-active
+    transition: all .3s
+.slide-enter
+    transform: translate3d(-100%, -80%, 0)
+.slide-leave-active
+    transform: translate3d(0, 0, 0)
 </style>

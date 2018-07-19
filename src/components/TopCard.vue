@@ -1,19 +1,18 @@
 <template>
-  <div class="top-card">
+    <div class="top-card" :style="{background:changeColor.color}"  v-show="changeColor.isTrue">
     <!-- FirstCardShow -->
     <transition name="showfront" >
-      <div class="rotate-front" v-show="!theFrontCard" >
-        <div class="card-img" ></div>    
-        <div class="card-num" 
-            :class="{active: focusCardNum}">
-            {{ pointNum }}
-        </div>                          
-        <div class="card-name" :class="{active: focusCardName}">{{ firstName }}</div>    
-        <div class="card-vaild" :class="{active: theOutVaild}">
-            <div class="card-thru">vaild thru</div>
-            <div class="card-date">{{ expiryDate }}</div>
+        <div class="rotate-front" v-show="!theFrontCard" >
+            <div class="card-img"></div>    
+            <div class="card-num" :class="{active: focusCardNum}">
+                {{ pointNum }}
+            </div>                          
+            <div class="card-name" :class="{active: focusCardName}">{{ firstName }}</div>    
+            <div class="card-vaild" :class="{active: theOutVaild}">
+                <div class="card-thru">vaild thru</div>
+                <div class="card-date">{{ expiryDate }}</div>
+            </div>
         </div>
-      </div>
     </transition>
     <!-- BackCardShow -->
     <transition name="showback">
@@ -22,60 +21,94 @@
                 <div class="back-img"></div>
                 <div class="back-cvc">{{ digitCvc }}</div>
         </div>
-    </transition>
+    </transition>   
   </div>
 </template>
-
 <script>
 export default {
-  props: {
-    pointNum : {
-      type : String,
-      value : '•••• •••• •••• ••••'
+    props: {
+        pointNum : {
+        type : String,
+        value : '•••• •••• •••• ••••'
+        },
+        firstName : {
+        type : String,
+        value : 'YOUR NAME HERE'
+        },
+        expiryDate : {
+        type : String,
+        value : '••/••'
+        },
+        digitCvc : {
+        type : String,
+        value : ''
+        },
+        theFrontCard : {
+        type : Boolean,
+        value : false
+        },
+        focusCardNum : {
+        type : Boolean,
+        value : false
+        },
+        focusCardName : {
+        type : Boolean,
+        value : false
+        },
+        theOutVaild : {
+        type : Boolean,
+        value : false
+        },
+        color: {
+        type: String,
+        default: ''
+        }
     },
-    firstName : {
-      type : String,
-      value : 'YOUR NAME HERE'
-    },
-    expiryDate : {
-      type : String,
-      value : '••/••'
-    },
-    digitCvc : {
-      type : String,
-      value : ''
-    },
-    theFrontCard : {
-      type : Boolean,
-      value : false
-    },
-    focusCardNum : {
-      type : Boolean,
-      value : false
-    },
-    focusCardName : {
-      type : Boolean,
-      value : false
-    },
-    theOutVaild : {
-      type : Boolean,
-      value : false
-    }
-  }
+    computed:{
+        changeColor() {
+        let newVal = this.pointNum
+        let color = ''
+        let isTrue = false
+        if(newVal.length > 1) {
+            let firstNum = parseInt(newVal.substr(0, 2))
+            switch(firstNum) {
+            case 49:
+                color = "linear-gradient(25deg, #0f509e, #1399cd)"
+                break
+            case 51:
+                color = "linear-gradient(25deg, #f37b26, #fdb731)"
+                break
+            case 36:
+                color = "linear-gradient(25deg, #fff, #eee)"
+                break
+            case 37:
+                color = "linear-gradient(25deg, #308c67, #a3f2cf)"
+                break
+            default:
+                color = "linear-gradient(25deg, #999, #999)"
+                break
+            }
+            isTrue = true
+        } else {
+            color = "linear-gradient(25deg, #999, #999)"
+            isTrue = false
+        }
+        return {isTrue, color}
+        }  
+    } 
 }
 </script>
-
 <style lang="stylus" rel="stylesheet/stylus">
 .top-card
     width 290px
     height 180px   
     margin 0 auto
     perspective 1000px
+    border-radius 14px
+    background-color #999
 .rotate-front, .rotate-back
     width 290px
-    height 180px
-    background-color #999
-    border-radius 14px
+    height 180px 
     transition-timing-function: linear
 .rotate-back
     position absolute
@@ -143,5 +176,5 @@ export default {
 .card-date
     font-size 17px
 .active
-      color:#fff
+    color:#fff
 </style>
