@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueMask from 'v-mask'
-Vue.use(VueMask)
 // import Creat from '@/components/creat.vue'
 
 Vue.use(Router)
@@ -10,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: resolve => { require(['../views/CreateCard.vue'], resolve) }
+      component: resolve => { require(['@/components/CreateCard.vue'], resolve) }
     }
   ]
 })
